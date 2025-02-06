@@ -1,11 +1,11 @@
 import os
 import subprocess
 
-# Folders
-og_folder = "OG"
-conv_folder = "Conv"
+# Base Folders
+og_folder = "OG" #Place Original files here
+conv_folder = "Conv" #Place Converted files here
 
-# ExifTool path (Change this if necessary)
+# ExifTool path
 exiftool_path = "exiftool(-k).exe"  # If using installed version, try just "exiftool"
 
 def copy_metadata(mov_file, mp4_file):
@@ -13,12 +13,12 @@ def copy_metadata(mov_file, mp4_file):
     cmd = [
         exiftool_path,
         "-tagsFromFile", mov_file,  # Copy metadata
-        "-overwrite_original",  # Prevents creation of backup files
+        "-overwrite_original",  # Usually -tagsFromFile creates a backup file! So this line Prevents creation of that!
         mp4_file
     ]
 
     try:
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=10)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=10) #Reduce timeout if you prefer :)
         if result.returncode == 0:
             print(f"Metadata copied: {mov_file} → {mp4_file}")
         else:
